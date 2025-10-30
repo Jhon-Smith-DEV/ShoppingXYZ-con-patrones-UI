@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>{{ accion }} Producto</h2>
+  <form method="post">
+    <label>Nombre<br><input name="nombre" value="{{ producto.nombre if producto }}"></label><br>
+    <label>Descripción<br><textarea name="descripcion">{{ producto.descripcion if producto }}</textarea></label><br>
+    <label>Precio<br><input name="precio" value="{{ producto.precio if producto }}"></label><br>
+    <label>Categoría<br>
+      <select name="categoria_id">
+        {% for c in categorias %}
+          <option value="{{ c.id }}" {% if producto and producto.categoria_id==c.id %}selected{% endif %}>{{ c.nombre }}</option>
+        {% endfor %}
+      </select>
+    </label><br>
+    <button type="submit">{{ accion }}</button>
+    <a href="{{ url_for('producto.listar') }}">Cancelar</a>
+  </form>
+{% endblock %}

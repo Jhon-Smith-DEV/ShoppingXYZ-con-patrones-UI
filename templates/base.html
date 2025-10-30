@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Flask CRUD</title>
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+</head>
+<body>
+  <header>
+    <h1>Shopping XYZ - sin patrones UI</h1>
+    <nav>
+      <a href="/">Inicio</a> |
+      <a href="/categorias/">Categorías</a> |
+      <a href="/productos/">Productos</a>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer>
+    <p>Proyecto demo - Arquitectura 3 capas</p>
+  </footer>
+</body>
+</html>

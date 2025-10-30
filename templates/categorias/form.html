@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>{{ accion }} Categoría</h2>
+  <form method="post">
+    <label>Nombre<br><input name="nombre" value="{{ categoria.nombre if categoria }}"></label><br>
+    <label>Descripción<br><textarea name="descripcion">{{ categoria.descripcion if categoria }}</textarea></label><br>
+    <button type="submit">{{ accion }}</button>
+    <a href="{{ url_for('categoria.listar') }}">Cancelar</a>
+  </form>
+{% endblock %}
