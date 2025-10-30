@@ -20,7 +20,7 @@ services:
     volumes:
       - .:/code
     ports:
-      - "5000:5000"
+      - "5001:5001"
     environment:
       - DATABASE_HOST=db
       - DATABASE_PORT=5432

@@ -9,7 +9,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
-ENV FLASK_RUN_PORT=5000
+ENV FLASK_RUN_PORT=5001
 
 # Instala dependencias del proyecto
 COPY requirements.txt .
@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expone el puerto 5000 (para Flask) ← opcional, pero buena práctica
-EXPOSE 5000
+EXPOSE 5001
 
 # Comando de inicio: ejecutar Flask directamente
 CMD ["flask", "run"]
