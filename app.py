@@ -15,7 +15,7 @@ app = create_app()
 def index():
     return render_template('base.html')
 
-# if __name__ == '__main__':
-#     os.environ.setdefault('FLASK_APP', 'app.py')
-#     # app.run(host='0.0.0.0', port=5000, debug=True)
-#     app.run(host='127.0.0.1', port=5001, debug=True)
+if __name__ == '__main__':
+    os.environ.setdefault('FLASK_APP', 'app.py')
+    # app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='127.0.0.1', port=5001, debug=True)

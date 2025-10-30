@@ -2,15 +2,34 @@
 {% block content %}
   <h2>{{ accion }} Producto</h2>
   <form method="post">
-    <label>Nombre<br><input name="nombre" value="{{ producto.nombre if producto }}"></label><br>
-    <label>Descripción<br><textarea name="descripcion">{{ producto.descripcion if producto }}</textarea></label><br>
-    <label>Precio<br><input name="precio" value="{{ producto.precio if producto }}"></label><br>
+    <label>Nombre<br>
+      <input name="nombre" type="text" placeholder="Ejemplo: Smartphone" value="{{ request.form.nombre if request.form.nombre is defined else (producto.nombre if producto) }}">
+      {% if errores and errores.get('nombre') %}
+        <span style="color:red; margin-left:10px;">{{ errores['nombre'] }}</span>
+      {% endif %}
+    </label><br>
+    <label>Descripción<br>
+      <textarea name="descripcion" placeholder="Ejemplo: Teléfono móvil de alta gama">{{ request.form.descripcion if request.form.descripcion is defined else (producto.descripcion if producto) }}</textarea>
+      {% if errores and errores.get('descripcion') %}
+        <span style="color:red; margin-left:10px;">{{ errores['descripcion'] }}</span>
+      {% endif %}
+    </label><br>
+    <label>Precio<br>
+      <input name="precio" type="number" step="any" min="0" placeholder="Ejemplo: 1200.50" value="{{ request.form.precio if request.form.precio is defined else (producto.precio if producto) }}">
+      {% if errores and errores.get('precio') %}
+        <span style="color:red; margin-left:10px;">{{ errores['precio'] }}</span>
+      {% endif %}
+    </label><br>
     <label>Categoría<br>
       <select name="categoria_id">
+        <option value="">Seleccione una categoría...</option>
         {% for c in categorias %}
-          <option value="{{ c.id }}" {% if producto and producto.categoria_id==c.id %}selected{% endif %}>{{ c.nombre }}</option>
+          <option value="{{ c.id }}" {% if (request.form.categoria_id is defined and request.form.categoria_id==c.id|string) or (producto and producto.categoria_id==c.id) %}selected{% endif %}>{{ c.nombre }}</option>
         {% endfor %}
       </select>
+      {% if errores and errores.get('categoria_id') %}
+        <span style="color:red; margin-left:10px;">{{ errores['categoria_id'] }}</span>
+      {% endif %}
     </label><br>
     <button type="submit">{{ accion }}</button>
     <a href="{{ url_for('producto.listar') }}">Cancelar</a>

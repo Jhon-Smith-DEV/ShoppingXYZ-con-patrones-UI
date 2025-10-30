@@ -2,8 +2,18 @@
 {% block content %}
   <h2>{{ accion }} Categoría</h2>
   <form method="post">
-    <label>Nombre<br><input name="nombre" value="{{ categoria.nombre if categoria }}"></label><br>
-    <label>Descripción<br><textarea name="descripcion">{{ categoria.descripcion if categoria }}</textarea></label><br>
+    <label>Nombre<br>
+      <input name="nombre" type="text" placeholder="Ejemplo: Electrónica" value="{{ request.form.nombre if request.form.nombre is defined else (categoria.nombre if categoria) }}">
+      {% if errores and errores.get('nombre') %}
+        <span style="color:red; margin-left:10px;">{{ errores['nombre'] }}</span>
+      {% endif %}
+    </label><br>
+    <label>Descripción<br>
+      <textarea name="descripcion" placeholder="Ejemplo: Artículos electrónicos">{{ request.form.descripcion if request.form.descripcion is defined else (categoria.descripcion if categoria) }}</textarea>
+      {% if errores and errores.get('descripcion') %}
+        <span style="color:red; margin-left:10px;">{{ errores['descripcion'] }}</span>
+      {% endif %}
+    </label><br>
     <button type="submit">{{ accion }}</button>
     <a href="{{ url_for('categoria.listar') }}">Cancelar</a>
   </form>

@@ -10,17 +10,44 @@ def listar():
 
 @categoria_bp.route('/crear', methods=['GET','POST'])
 def crear():
+    errores = {}
     if request.method == 'POST':
-        CategoriaService.crear({'nombre': request.form.get('nombre'), 'descripcion': request.form.get('descripcion')})
-        return redirect(url_for('categoria.listar'))
+        nombre = request.form.get('nombre', '').strip()
+        descripcion = request.form.get('descripcion', '').strip()
+        # Validaciones
+        if not nombre:
+            errores['nombre'] = 'El nombre es obligatorio.'
+        if not descripcion:
+            errores['descripcion'] = 'La descripción es obligatoria.'
+        if not errores:
+            CategoriaService.crear({'nombre': nombre, 'descripcion': descripcion})
+            return redirect(url_for('categoria.listar'))
+        else:
+            return render_template('categorias/form.html', accion='Crear', errores=errores)
     return render_template('categorias/form.html', accion='Crear')
 
 @categoria_bp.route('/editar/<int:id>', methods=['GET','POST'])
 def editar(id):
     categoria = CategoriaService.obtener(id)
+    errores = {}
     if request.method == 'POST':
-        CategoriaService.actualizar({'id': id, 'nombre': request.form.get('nombre'), 'descripcion': request.form.get('descripcion')})
-        return redirect(url_for('categoria.listar'))
+        nombre = request.form.get('nombre', '').strip()
+        descripcion = request.form.get('descripcion', '').strip()
+        # Validaciones
+        if not nombre:
+            errores['nombre'] = 'El nombre es obligatorio.'
+        if not descripcion:
+            errores['descripcion'] = 'La descripción es obligatoria.'
+        if not errores:
+            CategoriaService.actualizar({'id': id, 'nombre': nombre, 'descripcion': descripcion})
+            return redirect(url_for('categoria.listar'))
+        else:
+            categoria_data = {
+                'id': id,
+                'nombre': nombre,
+                'descripcion': descripcion
+            }
+            return render_template('categorias/form.html', categoria=categoria_data, accion='Editar', errores=errores)
     return render_template('categorias/form.html', categoria=categoria, accion='Editar')
 
 @categoria_bp.route('/eliminar/<int:id>')
